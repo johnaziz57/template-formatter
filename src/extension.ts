@@ -13,18 +13,41 @@ export function activate(context: vscode.ExtensionContext) {
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('template-formatter.helloWorld', () => {
+	const disposable = vscode.commands.registerCommand('template-formatter.helloWorld', () => {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		vscode.window.showInformationMessage('Hello World from Template Formatter!');
 	});
 
-	let disposable_2 = vscode.commands.registerCommand('template-formatter.currentTime', () => {
-		vscode.window.showInformationMessage(`${new Date()}`);
+	const disposableFormatter = vscode.commands.registerCommand('template-formatter.formatTemplate', () => {
+		const { activeTextEditor } = vscode.window;
+
+		if (activeTextEditor?.document.languageId !== "foo-lang") { return; }
+
+		const { document } = activeTextEditor;
+		const firsLine = document.lineAt(0);
+
+		if (firsLine.text !== '42') {
+			const edit = new vscode.WorkspaceEdit();
+			edit.insert(document.uri, firsLine.range.start, '42\n');
+
+			return vscode.workspace.applyEdit(edit);
+		}
 	});
 
-	context.subscriptions.push(disposable, disposable_2);
+	vscode.languages.registerDocumentFormattingEditProvider('foo-lang', {
+		provideDocumentFormattingEdits(document: vscode.TextDocument): vscode.TextEdit[] {
+			const firstLine = document.lineAt(0);
+			if (firstLine.text !== '42') {
+				return [vscode.TextEdit.insert(firstLine.range.start, '42\n')];
+			} else {
+				return [];
+			}
+		}
+	});
+
+	context.subscriptions.push(disposable, disposableFormatter);
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
