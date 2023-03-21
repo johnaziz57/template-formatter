@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext) {
 	const disposableFormatter = vscode.commands.registerCommand('template-formatter.formatTemplate', () => {
 		const { activeTextEditor } = vscode.window;
 
-		if (activeTextEditor?.document.languageId !== "foo-lang") { return; }
+		if (activeTextEditor?.document.languageId !== "template") { return; }
 
 		const { document } = activeTextEditor;
 		const firsLine = document.lineAt(0);
@@ -35,7 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
-	vscode.languages.registerDocumentFormattingEditProvider('foo-lang', {
+	vscode.languages.registerDocumentFormattingEditProvider('template', {
 		provideDocumentFormattingEdits(document: vscode.TextDocument): vscode.TextEdit[] {
 			const firstLine = document.lineAt(0);
 			if (firstLine.text !== '42') {

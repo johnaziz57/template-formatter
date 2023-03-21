@@ -18,8 +18,20 @@
         "title": "Hello World"
       },
       {
-        "command": "template-formatter.currentTime",
-        "title": "Current Time"
+        "command": "template-formatter.formatTemplate",
+        "title": "Format Template"
+      }
+    ],
+    "languages": [
+      {
+        "id": "template",
+        "extension": [
+          "*.tmpl"
+        ],
+        "aliases": [
+          "Template",
+          "JSON handlebars template"
+        ]
       }
     ]
   },
