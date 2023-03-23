@@ -1,7 +1,7 @@
-// Generated from JSON.g4 by ANTLR 4.12.0
+// Generated from src/antlr/JSON.g4 by ANTLR 4.9.0-SNAPSHOT
 
-import {ParseTreeListener} from "antlr4";
 
+import { ParseTreeListener } from "antlr4ts/tree/ParseTreeListener";
 
 import { JsonContext } from "./JSONParser";
 import { ObjContext } from "./JSONParser";
@@ -18,7 +18,7 @@ import { ValueContext } from "./JSONParser";
  * This interface defines a complete listener for a parse tree produced by
  * `JSONParser`.
  */
-export default class JSONListener extends ParseTreeListener {
+export interface JSONListener extends ParseTreeListener {
 	/**
 	 * Enter a parse tree produced by `JSONParser.json`.
 	 * @param ctx the parse tree
@@ -29,6 +29,7 @@ export default class JSONListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitJson?: (ctx: JsonContext) => void;
+
 	/**
 	 * Enter a parse tree produced by `JSONParser.obj`.
 	 * @param ctx the parse tree
@@ -39,6 +40,7 @@ export default class JSONListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitObj?: (ctx: ObjContext) => void;
+
 	/**
 	 * Enter a parse tree produced by `JSONParser.objPair`.
 	 * @param ctx the parse tree
@@ -49,6 +51,7 @@ export default class JSONListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitObjPair?: (ctx: ObjPairContext) => void;
+
 	/**
 	 * Enter a parse tree produced by `JSONParser.pair`.
 	 * @param ctx the parse tree
@@ -59,6 +62,7 @@ export default class JSONListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitPair?: (ctx: PairContext) => void;
+
 	/**
 	 * Enter a parse tree produced by `JSONParser.templateOperatorPair`.
 	 * @param ctx the parse tree
@@ -69,6 +73,7 @@ export default class JSONListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTemplateOperatorPair?: (ctx: TemplateOperatorPairContext) => void;
+
 	/**
 	 * Enter a parse tree produced by `JSONParser.pairValue`.
 	 * @param ctx the parse tree
@@ -79,6 +84,7 @@ export default class JSONListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitPairValue?: (ctx: PairValueContext) => void;
+
 	/**
 	 * Enter a parse tree produced by `JSONParser.arr`.
 	 * @param ctx the parse tree
@@ -89,6 +95,7 @@ export default class JSONListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitArr?: (ctx: ArrContext) => void;
+
 	/**
 	 * Enter a parse tree produced by `JSONParser.templateOperatorValue`.
 	 * @param ctx the parse tree
@@ -99,6 +106,7 @@ export default class JSONListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTemplateOperatorValue?: (ctx: TemplateOperatorValueContext) => void;
+
 	/**
 	 * Enter a parse tree produced by `JSONParser.value`.
 	 * @param ctx the parse tree
