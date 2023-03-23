@@ -16,10 +16,6 @@
       {
         "command": "template-formatter.helloWorld",
         "title": "Hello World"
-      },
-      {
-        "command": "template-formatter.formatTemplate",
-        "title": "Format Template"
       }
     ],
     "languages": [

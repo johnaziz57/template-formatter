@@ -19,22 +19,6 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.showInformationMessage('Hello World from Template Formatter!');
 	});
 
-	const disposableFormatter = vscode.commands.registerCommand('template-formatter.formatTemplate', () => {
-		const { activeTextEditor } = vscode.window;
-
-		if (activeTextEditor?.document.languageId !== "template") { return; }
-
-		const { document } = activeTextEditor;
-		const firsLine = document.lineAt(0);
-
-		if (firsLine.text !== '42') {
-			const edit = new vscode.WorkspaceEdit();
-			edit.insert(document.uri, firsLine.range.start, '42\n');
-
-			return vscode.workspace.applyEdit(edit);
-		}
-	});
-
 	vscode.languages.registerDocumentFormattingEditProvider('template', {
 		provideDocumentFormattingEdits(document: vscode.TextDocument): vscode.TextEdit[] {
 			const firstLine = document.lineAt(0);
@@ -46,7 +30,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	});
 
-	context.subscriptions.push(disposable, disposableFormatter);
+	context.subscriptions.push(disposable);
 }
 
 // This method is called when your extension is deactivated
