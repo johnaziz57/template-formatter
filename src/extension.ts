@@ -1,10 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import { CharStreams, CommonTokenStream } from "antlr4ts";
 import * as vscode from "vscode";
 import { Range } from "vscode";
-import { JSONLexer } from "./antlr/JSONLexer";
-import { JsonContext, JSONParser, ValueContext } from "./antlr/JSONParser";
+import JSONLexer from "./antlr/JSONLexer";
+import JSONParser from "./antlr/JSONParser";
+import { CharStreams, CommonTokenStream } from "antlr4";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -46,22 +46,6 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(disposable);
 }
-
-// const traverseJson = (json: JsonContext): string =>{
-// 	let output = ""
-	
-// 	for (let index = 0; index < json.childCount; index++) {
-// 		const element = json.getChild(index);
-// 		switch 
-		
-// 	}
-
-// 	return output;
-// };
-
-// const traverseValue = (value: () => ValueContext): string  => {
-
-// }
 
 // This method is called when your extension is deactivated
 export function deactivate() {}
