@@ -4,7 +4,7 @@ import * as vscode from "vscode";
 import { Range } from "vscode";
 import JSONLexer from "./antlr/JSONLexer";
 import JSONParser from "./antlr/JSONParser";
-import { CharStreams, CommonTokenStream } from "antlr4";
+import { CharStreams, CommonTokenStream, Lexer } from "antlr4";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -35,10 +35,10 @@ export function activate(context: vscode.ExtensionContext) {
     ): vscode.TextEdit[] {
       const text = document.getText();
       const lexer = new JSONLexer(CharStreams.fromString(text));
-      const tokens = new CommonTokenStream(lexer);
+      const tokens = new CommonTokenStream(lexer as Lexer);
       const parser = new JSONParser(tokens);
       const tree = parser.json();
-      const formattedText = tree.toStringTree(parser.ruleNames);
+      const formattedText = tree.value.toString()
       const range = document.validateRange(new Range(0, 0, Infinity, Infinity));
       return [vscode.TextEdit.replace(range, formattedText)];
     },

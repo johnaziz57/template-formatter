@@ -1,4 +1,4 @@
-// Generated from JSON.g4 by ANTLR 4.12.0
+// Generated from JSON.g4 by ANTLR 4.13.0
 // noinspection ES6UnusedImports,JSUnusedGlobalSymbols,JSUnusedLocalSymbols
 import {
 	ATN,
@@ -33,18 +33,27 @@ export default class JSONLexer extends Lexer {
 	public static readonly EOF = Token.EOF;
 
 	public static readonly channelNames: string[] = [ "DEFAULT_TOKEN_CHANNEL", "HIDDEN" ];
-	public static readonly literalNames: (string|null)[] = [ null, "'{'", "','", "'}'", 
-                                                   "':'", "'['", "']'", 
-                                                   "'true'", "'false'", 
-                                                   "'null'", null, null, 
-                                                   null, "'{{'", "'}}'" ];
-	public static readonly symbolicNames: (string|null)[] = [ null, null, null, null, 
-                                                    null, null, null, null, 
-                                                    null, null, "START_BLOCK_2", 
-                                                    "ELSE_BLOCK_2", "END_BLOCK_2", 
-                                                    "L_OPERATOR_2", "R_OPERATOR_2", 
-                                                    "T_EXPRESSION", "STRING", 
-                                                    "NUMBER", "WS" ];
+	public static readonly literalNames: (string | null)[] = [ null, "'{'", 
+                                                            "','", "'}'", 
+                                                            "':'", "'['", 
+                                                            "']'", "'true'", 
+                                                            "'false'", "'null'", 
+                                                            null, null, 
+                                                            null, "'{{'", 
+                                                            "'}}'" ];
+	public static readonly symbolicNames: (string | null)[] = [ null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             null, null, 
+                                                             "START_BLOCK_2", 
+                                                             "ELSE_BLOCK_2", 
+                                                             "END_BLOCK_2", 
+                                                             "L_OPERATOR_2", 
+                                                             "R_OPERATOR_2", 
+                                                             "T_EXPRESSION", 
+                                                             "STRING", "NUMBER", 
+                                                             "WS" ];
 	public static readonly modeNames: string[] = [ "DEFAULT_MODE", ];
 
 	public static readonly ruleNames: string[] = [
