@@ -4,7 +4,8 @@ import * as vscode from "vscode";
 import { Range } from "vscode";
 import JSONLexer from "./antlr/JSONLexer";
 import JSONParser from "./antlr/JSONParser";
-import { CharStreams, CommonTokenStream, Lexer } from "antlr4";
+import { CharStreams, CommonTokenStream, Lexer, ParseTreeWalker } from "antlr4";
+import { TemplateWalker } from "./TemplateWalker";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -38,7 +39,9 @@ export function activate(context: vscode.ExtensionContext) {
       const tokens = new CommonTokenStream(lexer as Lexer);
       const parser = new JSONParser(tokens);
       const tree = parser.json();
-      const formattedText = tree.value.toString()
+      const templateWalker = new TemplateWalker();
+      ParseTreeWalker.DEFAULT.walk(templateWalker, tree);
+      const formattedText = templateWalker.getOutput();
       const range = document.validateRange(new Range(0, 0, Infinity, Infinity));
       return [vscode.TextEdit.replace(range, formattedText)];
     },

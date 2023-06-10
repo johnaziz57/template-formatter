@@ -1,34 +1,33 @@
 import JSONVisitor from "./antlr/JSONVisitor";
 
 export class TemplateVisitorClass extends JSONVisitor<void> {
+    output = "";
     
-
-/*     visitJson(ctx: any) {
+    visitJson = (ctx: any) => {
         throw new Error("Method not implemented.");
-    }
-    visitObj(ctx: any) {
+    };
+    visitObj = (ctx: any) => {
         throw new Error("Method not implemented.");
-    }
-    visitObjPair(ctx: any) {
+    };
+    visitObjPair = (ctx: any) => {
         throw new Error("Method not implemented.");
-    }
-    visitPair(ctx: any) {
+    };
+    visitPair = (ctx: any) => {
         throw new Error("Method not implemented.");
-    }
-    visitTemplateOperatorPair(ctx: any) {
+    };
+    visitTemplateOperatorPair = (ctx: any) => {
         throw new Error("Method not implemented.");
-    }
-    visitPairValue(ctx: any) {
+    };
+    visitPairValue = (ctx: any) => {
         throw new Error("Method not implemented.");
-    }
-    visitArr(ctx: any) {
+    };
+    visitArr = (ctx: any) => {
         throw new Error("Method not implemented.");
-    }
-    visitTemplateOperatorValue(ctx: any) {
+    };
+    visitTemplateOperatorValue = (ctx: any) => {
         throw new Error("Method not implemented.");
-    }
-    visitValue(ctx: any) {
+    };
+    visitValue = (ctx: any) => {
         throw new Error("Method not implemented.");
-    } */
-
+    };
 }
