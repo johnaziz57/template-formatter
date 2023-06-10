@@ -2,6 +2,15 @@
 
 This is the README for your extension "template-formatter". After writing up a brief description, we recommend including the following sections.
 
+## Regenrating the rules
+
+To regenerate execute the following
+
+```
+cd src/antlr/
+antlr -Dlanguage=TypeScript JSON.g4 -visitor
+```
+
 ## Features
 
 Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
