@@ -1,6 +1,11 @@
 # template-formatter README
 
-This is the README for your extension "template-formatter". After writing up a brief description, we recommend including the following sections.
+Attempt at formatting the templates
+
+## TODO
+1. Handle if/else conditions in the middle of an object
+2. Handle template declaration
+3. Handle `{{{` triple start block declaration
 
 ## Regenrating the rules
 
