@@ -1,20 +1,13 @@
 
 {
-    "template_id": "core-empty-tile-template"
-    "layout": 
-    {
-        "pml_version": "0.1.0"
-        "component": 
+    "template_id" : "core-empty-tile-template",
+    "layout" : {{#if something}}
         {
-            "type": "CONTAINER"
-            "overflow": "hidden"
-            "border_radius": 12
-            "width": "100%"
-            "height": "100%"
-            "backgroundColor": "GREY0"
-            "child": 
-            {
-            }
+            "x" : 0,
         }
-    }
+    {{else}}
+        {
+            "y" : 1,
+        }
+    {{/if}},
 }
