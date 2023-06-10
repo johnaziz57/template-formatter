@@ -38,7 +38,11 @@ This extension contributes the following settings:
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+### Extension Activation
+It seems that the extension doesn't get activated once debugging session has ran.
+A work around would be to call the HelloWorld command from the command palette and that would
+activate the extension.
+Formatting command, can be used after that
 
 ## Release Notes
 
