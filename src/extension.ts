@@ -1,6 +1,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+import { Range } from "vscode";
+import JSONLexer from "./antlr/JSONLexer";
+import JSONParser from "./antlr/JSONParser";
+import { CharStreams, CommonTokenStream, Lexer } from "antlr4";
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -29,12 +33,14 @@ export function activate(context: vscode.ExtensionContext) {
     provideDocumentFormattingEdits(
       document: vscode.TextDocument
     ): vscode.TextEdit[] {
-      const firstLine = document.lineAt(0);
-      if (firstLine.text !== "42") {
-        return [vscode.TextEdit.insert(firstLine.range.start, "42\n")];
-      } else {
-        return [];
-      }
+      const text = document.getText();
+      const lexer = new JSONLexer(CharStreams.fromString(text));
+      const tokens = new CommonTokenStream(lexer as Lexer);
+      const parser = new JSONParser(tokens);
+      const tree = parser.json();
+      const formattedText = tree.value.toString()
+      const range = document.validateRange(new Range(0, 0, Infinity, Infinity));
+      return [vscode.TextEdit.replace(range, formattedText)];
     },
   });
 
