@@ -2,6 +2,11 @@
 /** Taken from "The Definitive ANTLR 4 Reference" by Terence Parr */
 
 // Derived from http://json.org
+
+// Rules
+// 1. Allow dangling comma (TODO)
+
+
 grammar JSON;
 
 json
