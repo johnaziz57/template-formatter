@@ -21,71 +21,54 @@ export class TemplateWalker extends JSONListener {
     }
 
     enterJson = (ctx: JsonContext) => {
-        // this.output += "{\n";
-        this.increaseDistance();
+        this.distance = 0;
+        this.output = "";
     };
-    exitJson = (ctx: JsonContext) => {
-        // this.output += "\n}";
-        this.decreaseDistance();
-    };
+    exitJson = (ctx: JsonContext) => {};
+
     enterObj = (ctx: ObjContext) => {
         this.output += this.getNewLinePadding() + "{";
         this.increaseDistance();
     };
     exitObj = (ctx: ObjContext) => {
-        this.output += this.getNewLinePadding()+"}";
         this.decreaseDistance();
+        this.output += this.getNewLinePadding()+"}";
     };
-    enterObjPair = (ctx: ObjPairContext) => {
-        throw new Error("Method not implemented.");
-        this.output += ctx.getText();
-    };
-    exitObjPair = (ctx: ObjPairContext) => {
-        //this.output += ctx.getText();
-    };
+
+    enterObjPair = (ctx: ObjPairContext) => {};
+    exitObjPair = (ctx: ObjPairContext) => {};
+
     enterPair = (ctx: PairContext) => {
-        this.output += this.getNewLinePadding() + ctx.getText();
+        this.output += this.getNewLinePadding() + ctx.STRING().getText() + ": ";
     };
-    exitPair = (ctx: PairContext) => {
-        // this.output += ctx.getText();
-    };
-    enterTemplateOperatorPair = (ctx: TemplateOperatorPairContext) => {
-        this.output += this.getNewLinePadding() + ctx.getText();
-    };
-    exitTemplateOperatorPair = (ctx: TemplateOperatorPairContext) => {
-        // this.output += ctx.getText();
-    };
-    enterPairValue = (ctx: PairValueContext) => {
-        this.output += ctx.getText();
-    };
-    exitPairValue = (ctx: PairValueContext) => {
-        // this.output += ctx.getText();
-    };
-    enterArr = (ctx: ArrContext) => {
-        this.output += ctx.getText();
-    };
-    exitArr = (ctx: ArrContext) => {
-        // this.output += ctx.getText();
-    };
-    enterTemplateOperatorValue = (ctx: TemplateOperatorValueContext) => {
-        this.output += ctx.getText();
-    };
-    exitTemplateOperatorValue = (ctx: TemplateOperatorValueContext) => {
-        // this.output += ctx.getText();
-    };
+    exitPair = (ctx: PairContext) => {};
+
+    enterTemplateOperatorPair = (ctx: TemplateOperatorPairContext) => {};
+    exitTemplateOperatorPair = (ctx: TemplateOperatorPairContext) => {};
+
+    enterPairValue = (ctx: PairValueContext) => {};
+    exitPairValue = (ctx: PairValueContext) => {};
+
+    enterArr = (ctx: ArrContext) => {};
+    exitArr = (ctx: ArrContext) => {};
+    
+    enterTemplateOperatorValue = (ctx: TemplateOperatorValueContext) => {};
+    exitTemplateOperatorValue = (ctx: TemplateOperatorValueContext) => {};
+
     enterValue = (ctx: ValueContext) => {
+        if (ctx.obj() || ctx.arr()) {return}
+
         this.output += ctx.getText();
     };
-    exitValue = (ctx: ValueContext) => {
-        // this.output += ctx.getText();
-    };
+    exitValue = (ctx: ValueContext) => {};
+
+    private getNewLinePadding(): string {
+        return "\n" + this.getPadding();
+    }   
 
     private getPadding(): string {
         return " ".repeat(this.distance);
     }
-    private getNewLinePadding(): string {
-        return "\n" + this.getPadding();
-    }   
 
     private increaseDistance() {
         this.distance += 4
