@@ -1,7 +1,9 @@
 import JSONVisitor from "./antlr/JSONVisitor";
 
-export class TemplateVisitorClass implements JSONVisitor {
-    visitJson(ctx: any) {
+export class TemplateVisitorClass extends JSONVisitor<void> {
+    
+
+/*     visitJson(ctx: any) {
         throw new Error("Method not implemented.");
     }
     visitObj(ctx: any) {
@@ -27,6 +29,6 @@ export class TemplateVisitorClass implements JSONVisitor {
     }
     visitValue(ctx: any) {
         throw new Error("Method not implemented.");
-    }
+    } */
 
 }
