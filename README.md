@@ -6,6 +6,7 @@ Attempt at formatting the templates
 1. Handle if/else conditions in the middle of an object
 2. Handle template declaration
 3. Handle `{{{` triple start block declaration
+4. Make the extension activate right away, instead of calling hellow world
 
 ## Regenrating the rules
 
