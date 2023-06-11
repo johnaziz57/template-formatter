@@ -11,6 +11,7 @@ import JSONParser, {
     TemplateOperatorValueContext,
     ValueContext,
 } from "./antlr/JSONParser";
+import { log } from "console";
 
 export class TemplateWalker extends JSONListener {
     private distance = 0;
@@ -74,10 +75,15 @@ export class TemplateWalker extends JSONListener {
     exitValue = (ctx: ValueContext) => {};
 
     visitTerminal = (node: TerminalNode): void => {
+        const x = node.getText();
         if (node.symbol.type === JSONParser.ELSE_BLOCK_2) {
             this.decreaseDistance();
             this.output += this.getNewLinePadding() + node.getText();
             this.increaseDistance();
+        }
+        // T_1 if for ','
+        if (node.symbol.type === JSONParser.T__1) {
+            this.output += node.getText();
         }
     }
 
