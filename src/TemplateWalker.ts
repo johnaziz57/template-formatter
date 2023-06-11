@@ -43,7 +43,7 @@ export class TemplateWalker extends JSONListener {
             this.getNewLinePadding() + ctx.STRING().getText() + " : ";
     };
     exitPair = (ctx: PairContext) => {
-        this.output += ",";
+        // this.output += ",";
     };
 
     enterTemplateOperatorPair = (ctx: TemplateOperatorPairContext) => {};
