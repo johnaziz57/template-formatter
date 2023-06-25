@@ -14,6 +14,7 @@ import JSONParser, {
 import { log } from "console";
 
 const EMPTY_OBJECT_CHILDREN_COUNT = 2
+const EMPTY_ARRAY_CHILDREN_COUNT = 2
 
 export class TemplateWalker extends JSONListener {
     private distance = 0;
@@ -67,12 +68,28 @@ export class TemplateWalker extends JSONListener {
     enterPairValue = (ctx: PairValueContext) => {};
     exitPairValue = (ctx: PairValueContext) => {};
 
-    enterArr = (ctx: ArrContext) => {};
-    exitArr = (ctx: ArrContext) => {};
+    enterArr = (ctx: ArrContext) => {
+        if (ctx.children === undefined || ctx.children?.length === EMPTY_ARRAY_CHILDREN_COUNT) {
+            this.output += "[]";   
+        } else {
+            this.output += this.getNewLinePadding() + "[";
+            this.increaseDistance();
+        }
+    };
+    exitArr = (ctx: ArrContext) => {
+        if (ctx.children && ctx.children?.length > EMPTY_ARRAY_CHILDREN_COUNT) {
+            this.decreaseDistance();
+            this.output += this.getNewLinePadding() + "]";
+        }
+    };
 
     enterHelper = (ctx: HelperContext) => {
         this.helperCount++;
-        this.output += ctx.START_HELPER_BLOCK_2().getText();
+        if (ctx.parentCtx instanceof ValueContext) {
+            this.output += ctx.START_HELPER_BLOCK_2().getText();
+        } else {
+            this.output += this.getNewLinePadding() + ctx.START_HELPER_BLOCK_2().getText();
+        }
         this.increaseDistance();
     };
 
