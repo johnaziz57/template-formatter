@@ -16,8 +16,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "template-formatter.helloWorld",
-        "title": "Hello World"
+        "command": "template-formatter.formatJSONTemplate",
+        "title": "Format JSON Template"
       }
     ],
     "languages": [

@@ -20,13 +20,17 @@ export function activate(context: vscode.ExtensionContext) {
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
   const disposable = vscode.commands.registerCommand(
-    "template-formatter.helloWorld",
+    "template-formatter.formatJSONTemplate",
     () => {
-      // The code you place here will be executed every time your command is executed
-      // Display a message box to the user
-      vscode.window.showInformationMessage(
-        "Hello World from Template Formatter!"
-      );
+      const editor = vscode.window.activeTextEditor
+      if (!editor) return
+
+      const edit = new vscode.WorkspaceEdit();
+      const document = editor.document;
+      const formattedText = formatDocument(document)
+      const range = document.validateRange(new Range(0, 0, Infinity, Infinity));
+      edit.replace(document.uri, range, formattedText)
+      vscode.workspace.applyEdit(edit);
     }
   );
 
@@ -34,18 +38,22 @@ export function activate(context: vscode.ExtensionContext) {
     provideDocumentFormattingEdits(
       document: vscode.TextDocument
     ): vscode.TextEdit[] {
-      const text = document.getText();
-      const lexer = new JSONLexer(CharStreams.fromString(text));
-      const tokens = new CommonTokenStream(lexer as Lexer);
-      const parser = new JSONParser(tokens);
-      const tree = parser.json();
-      const templateWalker = new TemplateWalker();
-      ParseTreeWalker.DEFAULT.walk(templateWalker, tree);
-      const formattedText = templateWalker.getOutput();
+      const formattedText = formatDocument(document)
       const range = document.validateRange(new Range(0, 0, Infinity, Infinity));
       return [vscode.TextEdit.replace(range, formattedText)];
-    },
+      },
   });
+
+  const formatDocument = (document: vscode.TextDocument): string => {
+    const text = document.getText();
+    const lexer = new JSONLexer(CharStreams.fromString(text));
+    const tokens = new CommonTokenStream(lexer as Lexer);
+    const parser = new JSONParser(tokens);
+    const tree = parser.json();
+    const templateWalker = new TemplateWalker();
+    ParseTreeWalker.DEFAULT.walk(templateWalker, tree);
+    return templateWalker.getOutput();
+  }
 
   context.subscriptions.push(disposable);
 }
