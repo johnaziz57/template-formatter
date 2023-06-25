@@ -13,6 +13,8 @@ import JSONParser, {
 } from "./antlr/JSONParser";
 import { log } from "console";
 
+const EMPTY_OBJECT_CHILDREN_COUNT = 2
+
 export class TemplateWalker extends JSONListener {
     private distance = 0;
     private output = "";
@@ -29,7 +31,7 @@ export class TemplateWalker extends JSONListener {
     exitJson = (ctx: JsonContext) => {};
 
     enterObj = (ctx: ObjContext) => {
-        if (ctx.children === undefined || ctx.children?.length === 0) {
+        if (ctx.children === undefined || ctx.children?.length === EMPTY_OBJECT_CHILDREN_COUNT) {
             this.output += "{}";   
         } else {
             this.output += this.getNewLinePadding() + "{";
@@ -37,7 +39,7 @@ export class TemplateWalker extends JSONListener {
         }
     };
     exitObj = (ctx: ObjContext) => {
-        if (ctx.children && ctx.children?.length > 0) {
+        if (ctx.children && ctx.children?.length > EMPTY_OBJECT_CHILDREN_COUNT) {
             this.decreaseDistance();
             this.output += this.getNewLinePadding() + "}";
         }
