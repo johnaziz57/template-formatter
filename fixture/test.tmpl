@@ -1,13 +1,11 @@
-
 {
-    "template_id" : "core-empty-tile-template",
-    "layout" : {{#if something}}
-        {
-            "x" : 0,
-        }
-    {{else}}
-        {
-            "y" : 1,
-        }
-    {{/if}},
+    "template_id": "core-list-item-template",
+    "on_press": { 
+                {{#if actionType}}
+                "action_type": "{{actionType}}",
+                {{else}}
+                "action_type": "OPEN",
+                {{/if}}
+                "target": {{{template 'core-deeplink-resolver' deeplink=deeplink}}} 
+    }
 }
