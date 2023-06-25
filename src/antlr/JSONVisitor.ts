@@ -5,12 +5,14 @@ import {ParseTreeVisitor} from 'antlr4';
 
 import { JsonContext } from "./JSONParser";
 import { ObjContext } from "./JSONParser";
-import { ObjPairContext } from "./JSONParser";
+import { HelperOrPairContext } from "./JSONParser";
 import { PairContext } from "./JSONParser";
-import { TemplateOperatorPairContext } from "./JSONParser";
+import { HelperPairContext } from "./JSONParser";
+import { HelperIncompleteObjContext } from "./JSONParser";
 import { PairValueContext } from "./JSONParser";
 import { ArrContext } from "./JSONParser";
-import { TemplateOperatorValueContext } from "./JSONParser";
+import { HelperOrValueContext } from "./JSONParser";
+import { HelperContext } from "./JSONParser";
 import { ValueContext } from "./JSONParser";
 
 
@@ -35,11 +37,11 @@ export default class JSONVisitor<Result> extends ParseTreeVisitor<Result> {
 	 */
 	visitObj?: (ctx: ObjContext) => Result;
 	/**
-	 * Visit a parse tree produced by `JSONParser.objPair`.
+	 * Visit a parse tree produced by `JSONParser.helperOrPair`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitObjPair?: (ctx: ObjPairContext) => Result;
+	visitHelperOrPair?: (ctx: HelperOrPairContext) => Result;
 	/**
 	 * Visit a parse tree produced by `JSONParser.pair`.
 	 * @param ctx the parse tree
@@ -47,11 +49,17 @@ export default class JSONVisitor<Result> extends ParseTreeVisitor<Result> {
 	 */
 	visitPair?: (ctx: PairContext) => Result;
 	/**
-	 * Visit a parse tree produced by `JSONParser.templateOperatorPair`.
+	 * Visit a parse tree produced by `JSONParser.helperPair`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitTemplateOperatorPair?: (ctx: TemplateOperatorPairContext) => Result;
+	visitHelperPair?: (ctx: HelperPairContext) => Result;
+	/**
+	 * Visit a parse tree produced by `JSONParser.helperIncompleteObj`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitHelperIncompleteObj?: (ctx: HelperIncompleteObjContext) => Result;
 	/**
 	 * Visit a parse tree produced by `JSONParser.pairValue`.
 	 * @param ctx the parse tree
@@ -65,11 +73,17 @@ export default class JSONVisitor<Result> extends ParseTreeVisitor<Result> {
 	 */
 	visitArr?: (ctx: ArrContext) => Result;
 	/**
-	 * Visit a parse tree produced by `JSONParser.templateOperatorValue`.
+	 * Visit a parse tree produced by `JSONParser.helperOrValue`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	visitTemplateOperatorValue?: (ctx: TemplateOperatorValueContext) => Result;
+	visitHelperOrValue?: (ctx: HelperOrValueContext) => Result;
+	/**
+	 * Visit a parse tree produced by `JSONParser.helper`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitHelper?: (ctx: HelperContext) => Result;
 	/**
 	 * Visit a parse tree produced by `JSONParser.value`.
 	 * @param ctx the parse tree

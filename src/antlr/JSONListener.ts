@@ -5,12 +5,14 @@ import {ParseTreeListener} from "antlr4";
 
 import { JsonContext } from "./JSONParser";
 import { ObjContext } from "./JSONParser";
-import { ObjPairContext } from "./JSONParser";
+import { HelperOrPairContext } from "./JSONParser";
 import { PairContext } from "./JSONParser";
-import { TemplateOperatorPairContext } from "./JSONParser";
+import { HelperPairContext } from "./JSONParser";
+import { HelperIncompleteObjContext } from "./JSONParser";
 import { PairValueContext } from "./JSONParser";
 import { ArrContext } from "./JSONParser";
-import { TemplateOperatorValueContext } from "./JSONParser";
+import { HelperOrValueContext } from "./JSONParser";
+import { HelperContext } from "./JSONParser";
 import { ValueContext } from "./JSONParser";
 
 
@@ -40,15 +42,15 @@ export default class JSONListener extends ParseTreeListener {
 	 */
 	exitObj?: (ctx: ObjContext) => void;
 	/**
-	 * Enter a parse tree produced by `JSONParser.objPair`.
+	 * Enter a parse tree produced by `JSONParser.helperOrPair`.
 	 * @param ctx the parse tree
 	 */
-	enterObjPair?: (ctx: ObjPairContext) => void;
+	enterHelperOrPair?: (ctx: HelperOrPairContext) => void;
 	/**
-	 * Exit a parse tree produced by `JSONParser.objPair`.
+	 * Exit a parse tree produced by `JSONParser.helperOrPair`.
 	 * @param ctx the parse tree
 	 */
-	exitObjPair?: (ctx: ObjPairContext) => void;
+	exitHelperOrPair?: (ctx: HelperOrPairContext) => void;
 	/**
 	 * Enter a parse tree produced by `JSONParser.pair`.
 	 * @param ctx the parse tree
@@ -60,15 +62,25 @@ export default class JSONListener extends ParseTreeListener {
 	 */
 	exitPair?: (ctx: PairContext) => void;
 	/**
-	 * Enter a parse tree produced by `JSONParser.templateOperatorPair`.
+	 * Enter a parse tree produced by `JSONParser.helperPair`.
 	 * @param ctx the parse tree
 	 */
-	enterTemplateOperatorPair?: (ctx: TemplateOperatorPairContext) => void;
+	enterHelperPair?: (ctx: HelperPairContext) => void;
 	/**
-	 * Exit a parse tree produced by `JSONParser.templateOperatorPair`.
+	 * Exit a parse tree produced by `JSONParser.helperPair`.
 	 * @param ctx the parse tree
 	 */
-	exitTemplateOperatorPair?: (ctx: TemplateOperatorPairContext) => void;
+	exitHelperPair?: (ctx: HelperPairContext) => void;
+	/**
+	 * Enter a parse tree produced by `JSONParser.helperIncompleteObj`.
+	 * @param ctx the parse tree
+	 */
+	enterHelperIncompleteObj?: (ctx: HelperIncompleteObjContext) => void;
+	/**
+	 * Exit a parse tree produced by `JSONParser.helperIncompleteObj`.
+	 * @param ctx the parse tree
+	 */
+	exitHelperIncompleteObj?: (ctx: HelperIncompleteObjContext) => void;
 	/**
 	 * Enter a parse tree produced by `JSONParser.pairValue`.
 	 * @param ctx the parse tree
@@ -90,15 +102,25 @@ export default class JSONListener extends ParseTreeListener {
 	 */
 	exitArr?: (ctx: ArrContext) => void;
 	/**
-	 * Enter a parse tree produced by `JSONParser.templateOperatorValue`.
+	 * Enter a parse tree produced by `JSONParser.helperOrValue`.
 	 * @param ctx the parse tree
 	 */
-	enterTemplateOperatorValue?: (ctx: TemplateOperatorValueContext) => void;
+	enterHelperOrValue?: (ctx: HelperOrValueContext) => void;
 	/**
-	 * Exit a parse tree produced by `JSONParser.templateOperatorValue`.
+	 * Exit a parse tree produced by `JSONParser.helperOrValue`.
 	 * @param ctx the parse tree
 	 */
-	exitTemplateOperatorValue?: (ctx: TemplateOperatorValueContext) => void;
+	exitHelperOrValue?: (ctx: HelperOrValueContext) => void;
+	/**
+	 * Enter a parse tree produced by `JSONParser.helper`.
+	 * @param ctx the parse tree
+	 */
+	enterHelper?: (ctx: HelperContext) => void;
+	/**
+	 * Exit a parse tree produced by `JSONParser.helper`.
+	 * @param ctx the parse tree
+	 */
+	exitHelper?: (ctx: HelperContext) => void;
 	/**
 	 * Enter a parse tree produced by `JSONParser.value`.
 	 * @param ctx the parse tree

@@ -2,20 +2,21 @@ import { ParserRuleContext, TerminalNode } from "antlr4";
 import JSONListener from "./antlr/JSONListener";
 import JSONParser, {
     ArrContext,
+    HelperContext,
     JsonContext,
     ObjContext,
-    ObjPairContext,
     PairContext,
     PairValueContext,
-    TemplateOperatorPairContext,
-    TemplateOperatorValueContext,
     ValueContext,
+    HelperPairContext,
+    HelperOrPairContext,
 } from "./antlr/JSONParser";
 import { log } from "console";
 
 export class TemplateWalker extends JSONListener {
     private distance = 0;
     private output = "";
+    private helperCount = 0
 
     getOutput = (): string => {
         return this.output;
@@ -28,16 +29,19 @@ export class TemplateWalker extends JSONListener {
     exitJson = (ctx: JsonContext) => {};
 
     enterObj = (ctx: ObjContext) => {
-        this.output += this.getNewLinePadding() + "{";
-        this.increaseDistance();
+        if (ctx.children === undefined || ctx.children?.length === 0) {
+            this.output += "{}";   
+        } else {
+            this.output += this.getNewLinePadding() + "{";
+            this.increaseDistance();
+        }
     };
     exitObj = (ctx: ObjContext) => {
-        this.decreaseDistance();
-        this.output += this.getNewLinePadding() + "}";
+        if (ctx.children && ctx.children?.length > 0) {
+            this.decreaseDistance();
+            this.output += this.getNewLinePadding() + "}";
+        }
     };
-
-    enterObjPair = (ctx: ObjPairContext) => {};
-    exitObjPair = (ctx: ObjPairContext) => {};
 
     enterPair = (ctx: PairContext) => {
         this.output +=
@@ -47,8 +51,16 @@ export class TemplateWalker extends JSONListener {
         // this.output += ",";
     };
 
-    enterTemplateOperatorPair = (ctx: TemplateOperatorPairContext) => {};
-    exitTemplateOperatorPair = (ctx: TemplateOperatorPairContext) => {};
+    enterHelperPair = (ctx: HelperPairContext) => {
+        this.output += this.getNewLinePadding() + ctx.START_HELPER_BLOCK_2().getText();
+        this.increaseDistance();
+    }
+
+    exitHelperPair =  (ctx: HelperPairContext) => {
+        this.decreaseDistance();
+        this.output +=
+            this.getNewLinePadding() + ctx.END_HELPER_BLOCK_2().getText();
+    }
 
     enterPairValue = (ctx: PairValueContext) => {};
     exitPairValue = (ctx: PairValueContext) => {};
@@ -56,21 +68,29 @@ export class TemplateWalker extends JSONListener {
     enterArr = (ctx: ArrContext) => {};
     exitArr = (ctx: ArrContext) => {};
 
-    enterTemplateOperatorValue = (ctx: TemplateOperatorValueContext) => {
-        this.output += ctx.START_BLOCK_2().getText();
+    enterHelper = (ctx: HelperContext) => {
+        this.helperCount++;
+        this.output += ctx.START_HELPER_BLOCK_2().getText();
         this.increaseDistance();
     };
-    exitTemplateOperatorValue = (ctx: TemplateOperatorValueContext) => {
+
+    exitHelper = (ctx: HelperContext) => {
         this.decreaseDistance();
-        this.output += this.getNewLinePadding() + ctx.END_BLOCK_2().getText();
+        this.output +=
+            this.getNewLinePadding() + ctx.END_HELPER_BLOCK_2().getText();
+        this.helperCount--;
     };
 
     enterValue = (ctx: ValueContext) => {
         if (ctx.obj() || ctx.arr()) {
             return;
         }
-
-        this.output += ctx.getText();
+        if (this.helperCount === 0) {
+            this.output += ctx.getText();
+        } else {
+            this.output += this.getNewLinePadding() + ctx.getText()
+        }
+        
     };
     exitValue = (ctx: ValueContext) => {};
 
@@ -85,7 +105,7 @@ export class TemplateWalker extends JSONListener {
         if (node.symbol.type === JSONParser.T__1) {
             this.output += node.getText();
         }
-    }
+    };
 
     private getNewLinePadding(): string {
         return "\n" + this.getPadding();
@@ -100,5 +120,9 @@ export class TemplateWalker extends JSONListener {
     }
     private decreaseDistance() {
         this.distance -= 4;
+    }
+
+    private getNewLine(): string {
+        return "\n"
     }
 }
