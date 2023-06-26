@@ -33,7 +33,11 @@ export class TemplateWalker extends JSONListener {
         if (ctx.children === undefined || ctx.children?.length === EMPTY_OBJECT_CHILDREN_COUNT) {
             this.output += "{}";   
         } else {
-            this.output += this.getNewLinePadding() + "{";
+            if (ctx.parentCtx?.parentCtx instanceof JsonContext){
+                this.output += this.getPadding() + "{";
+            } else {
+                this.output += this.getNewLinePadding() + "{";
+            }
             this.increaseDistance();
         }
     };
