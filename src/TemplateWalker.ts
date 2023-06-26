@@ -10,6 +10,7 @@ import JSONParser, {
     ValueContext,
     HelperPairContext,
     HelperOrPairContext,
+    HelperOrValueContext,
 } from "./antlr/JSONParser";
 import { log } from "console";
 
@@ -81,6 +82,10 @@ export class TemplateWalker extends JSONListener {
             this.decreaseDistance();
             this.output += this.getNewLinePadding() + "]";
         }
+    };
+
+    enterHelperOrValue = (ctx: HelperOrValueContext) => {
+        this.output += this.getNewLinePadding()
     };
 
     enterHelper = (ctx: HelperContext) => {

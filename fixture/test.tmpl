@@ -1,22 +1,51 @@
 
 {
-    "template_id" : "core-more-button-purchases-template",
+    "template_id" : "category-tree-root",
     "layout" : 
     {
-        "pml_version" : "0.1.0",
-        "component" : 
+        "id" : "category-tree-root",
+        "body" : 
         {
-            "type" : "TOUCHABLE",
-            "accessibilityHint" : "{{localize COPY.accessibilityHint}}",
-            "onPress" : 
+            "type" : "BLOCK",
+            "id" : "root",
+            "layout" : 
             {
-                "actionType" : "OPEN",
-                {{#if pppParameterizedPageDeeplink.isEmpty}}
-                    "target" : "nl.picnic-supermarkt://store/page;id=purchases-page-root-category-{{moreButtonDeeplink}}"
-                {{else}}
-                    "target" : "nl.picnic-supermarkt://store/page;id=purchases-page-root-category,identifier={{moreButtonDeeplink}}"
-                {{/if}}
-            }
+                "type" : "FLOW",
+                "axis" : "VERTICAL",
+                "spacing" : 
+                {
+                    "mainAxis" : 4
+                },
+                "padding" : 
+                {
+                    "top" : 4,
+                    "right" : 0,
+                    "bottom" : 4,
+                    "left" : 0
+                },
+                "backgroundColor" : "GREY1"
+            },
+            "size" : 
+            {
+                "crossAxis" : "SCREEN_WIDTH"
+            },
+            "children" : 
+            [
+                {{{template 'core-category-tree-vertical-list-section' categoryTreeData=categoryTreeData}}}
+            ]
         }
+    },
+    "context" : 
+    {
+        "categoryTreeData" : 
+        {
+            "$query" : "SELECT * FROM calcite_categories WHERE level = 1 ORDER BY absolute_position ASC, priority DESC"
+        }
+    },
+    "metadata" : 
+    {
+        "title" : "Category tree page root",
+        "type" : "ROOT_PAGE",
+        "properties_schema" : "{\"properties\":{}}"
     }
 }
