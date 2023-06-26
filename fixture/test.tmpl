@@ -1,51 +1,10 @@
 
 {
-    "template_id" : "category-tree-root",
-    "layout" : 
-    {
-        "id" : "category-tree-root",
-        "body" : 
-        {
-            "type" : "BLOCK",
-            "id" : "root",
-            "layout" : 
-            {
-                "type" : "FLOW",
-                "axis" : "VERTICAL",
-                "spacing" : 
-                {
-                    "mainAxis" : 4
-                },
-                "padding" : 
-                {
-                    "top" : 4,
-                    "right" : 0,
-                    "bottom" : 4,
-                    "left" : 0
-                },
-                "backgroundColor" : "GREY1"
-            },
-            "size" : 
-            {
-                "crossAxis" : "SCREEN_WIDTH"
-            },
-            "children" : 
-            [
-                {{{template 'core-category-tree-vertical-list-section' categoryTreeData=categoryTreeData}}}
-            ]
-        }
-    },
-    "context" : 
-    {
-        "categoryTreeData" : 
-        {
-            "$query" : "SELECT * FROM calcite_categories WHERE level = 1 ORDER BY absolute_position ASC, priority DESC"
-        }
-    },
-    "metadata" : 
-    {
-        "title" : "Category tree page root",
-        "type" : "ROOT_PAGE",
-        "properties_schema" : "{\"properties\":{}}"
-    }
+    "key" : {{{template 'single-promo-group-header' title=promoGroup.title deeplink=deepDivePageDeeplink}}},
+    "children" : 
+    [
+        {{#each}}
+            {{{template 'single-promo-group-header' title=promoGroup.title deeplink=deepDivePageDeeplink}}}
+        {{/each}}
+    ]
 }
