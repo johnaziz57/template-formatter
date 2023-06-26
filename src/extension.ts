@@ -50,6 +50,9 @@ export function activate(context: vscode.ExtensionContext) {
     const tokens = new CommonTokenStream(lexer as Lexer);
     const parser = new JSONParser(tokens);
     const tree = parser.json();
+    if (parser.syntaxErrorsCount > 0) {
+      return text
+    }
     const templateWalker = new TemplateWalker();
     ParseTreeWalker.DEFAULT.walk(templateWalker, tree);
     return templateWalker.getOutput();
