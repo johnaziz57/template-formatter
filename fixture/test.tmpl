@@ -1,10 +1,19 @@
 
 {
-    "key" : {{{template 'single-promo-group-header' title=promoGroup.title deeplink=deepDivePageDeeplink}}},
-    "children" : 
-    [
-        {{#each}}
-            {{{template 'single-promo-group-header' title=promoGroup.title deeplink=deepDivePageDeeplink}}}
-        {{/each}}
-    ]
+    "template_id" : "core-vertical-article-tile-template",
+    "layout" : {{#and position features}}
+        {{{template 'core-vertical-selling-unit-tile-template' sellingUnit=article.toSellingUnit position=position features=features}}}
+    {{else}}
+        {{#if position}}
+            {{{template 'core-vertical-selling-unit-tile-template' sellingUnit=article.toSellingUnit position=position}}}
+        {{else}}
+            {{#if features}}
+                {{{template 'core-vertical-selling-unit-tile-template' sellingUnit=article.toSellingUnit features=features}}}
+            {{else}}
+                {{{template 'core-vertical-selling-unit-tile-template' sellingUnit=article.toSellingUnit}}}
+            {{/if}}
+        {{/if}}
+    {{/and}},
+    "context" : {},
+    "metadata" : {}
 }

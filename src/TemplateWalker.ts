@@ -9,10 +9,8 @@ import JSONParser, {
     PairValueContext,
     ValueContext,
     HelperPairContext,
-    HelperOrPairContext,
     HelperOrValueContext,
 } from "./antlr/JSONParser";
-import { log } from "console";
 
 const EMPTY_OBJECT_CHILDREN_COUNT = 2
 const EMPTY_ARRAY_CHILDREN_COUNT = 2
@@ -20,7 +18,6 @@ const EMPTY_ARRAY_CHILDREN_COUNT = 2
 export class TemplateWalker extends JSONListener {
     private distance = 0;
     private output = "";
-    private helperCount = 0
 
     getOutput = (): string => {
         return this.output;
@@ -89,8 +86,7 @@ export class TemplateWalker extends JSONListener {
     };
 
     enterHelper = (ctx: HelperContext) => {
-        this.helperCount++;
-        if (ctx.parentCtx instanceof ValueContext) {
+        if (ctx.parentCtx instanceof PairValueContext) {
             this.output += ctx.START_HELPER_BLOCK_2().getText();
         } else {
             this.output += this.getNewLinePadding() + ctx.START_HELPER_BLOCK_2().getText();
@@ -102,20 +98,20 @@ export class TemplateWalker extends JSONListener {
         this.decreaseDistance();
         this.output +=
             this.getNewLinePadding() + ctx.END_HELPER_BLOCK_2().getText();
-        this.helperCount--;
     };
 
     enterValue = (ctx: ValueContext) => {
         if (ctx.obj() || ctx.arr()) {
             return;
         }
-        if (this.helperCount === 0) {
-            this.output += ctx.getText();
-        } else {
+
+        if (ctx.parentCtx instanceof HelperContext) {
             this.output += this.getNewLinePadding() + ctx.getText()
-        }
-        
+        } else {
+            this.output += ctx.getText();
+        }        
     };
+
     exitValue = (ctx: ValueContext) => {};
 
     visitTerminal = (node: TerminalNode): void => {
