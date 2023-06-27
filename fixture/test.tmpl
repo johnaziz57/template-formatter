@@ -1,6 +1,22 @@
 {
     "template_id" : "purchases-page-root-category",
-    "layout" : {{{template 'core-vertical-tiles-purchases-category-root'}}},
-    "context" : {},
+    "layout" : {{#gt groups.length 0}}
+        {{#each groups as | purchasesPageSection |}}
+            {{#eq purchasesPageSection.groupIdentifier identifier}}
+                {{{template 'core-vertical-tiles-purchases-category-root' }}}
+            {{/eq}}
+        {{/each}}
+    {{/gt}},
+    "context" : 
+    {
+        "groups" : 
+        {
+            "$query" : "SELECT * FROM purchased_article_groups WHERE id IN ('current_user')"
+        },
+        "identifier" : 
+        {
+            "$param" : "identifier"
+        }
+    },
     "metadata" : {}
 }

@@ -14,6 +14,7 @@ import JSONParser, {
 
 const EMPTY_OBJECT_CHILDREN_COUNT = 2
 const EMPTY_ARRAY_CHILDREN_COUNT = 2
+const INDENT_SIZE = 2
 
 export class TemplateWalker extends JSONListener {
     private distance = 0;
@@ -140,10 +141,10 @@ export class TemplateWalker extends JSONListener {
     }
 
     private increaseDistance() {
-        this.distance += 4;
+        this.distance += INDENT_SIZE;
     }
     private decreaseDistance() {
-        this.distance -= 4;
+        this.distance -= INDENT_SIZE;
     }
 
     private getNewLine(): string {
